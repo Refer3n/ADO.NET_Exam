@@ -19,36 +19,36 @@ namespace HotelApp.Providers
 
         public void AddRooms(List<Room> rooms)
         {
-            rooms.ForEach(room => AddReservation(room));
+            rooms.ForEach(room => AddRoom(room));
         }
 
-        public void AddReservation(Room room)
+        public void AddRoom(Room room)
         {
             _repository.Add(room);
         }
 
-        public void RemoveReservations(List<Room> rooms)
+        public void RemoveRooms(List<Room> rooms)
         {
-            rooms.ForEach(room => RemoveReservation(room));
+            rooms.ForEach(room => RemoveRoom(room));
         }
 
-        public void RemoveReservation(Room room)
+        public void RemoveRoom(Room room)
         {
             _repository.Remove(room);
         }
 
-        public void RemoveReservation(int Id)
+        public void RemoveRoom(int Id)
         {
-            var room = GetReservation(Id);
+            var room = GetRoom(Id);
             _repository.Remove(room);
         }
 
-        public Room GetReservation(int Id)
+        public Room GetRoom(int Id)
         {
             return _repository.Get(Id);
         }
 
-        public IEnumerable<Room> GetReservations()
+        public IEnumerable<Room> GetRooms()
         {
             return _repository.GetAll();
         }

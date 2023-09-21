@@ -23,32 +23,56 @@ namespace HotelApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        private ObservableCollection<RoomViewModel> RoomViewModels { get; set; } = new ObservableCollection<RoomViewModel>();
+        private ObservableCollection<RoomViewModel> _roomViewModels;
 
-        private ReservationService _reservationService;
+        private RoomService _roomService;
 
         public MainWindow()
         {
             InitializeComponent();
-            _reservationService = new ReservationService();
+            _roomService = new RoomService();
 
-            roomListView.ItemsSource = RoomViewModels;
+            _roomViewModels = new ObservableCollection<RoomViewModel>();
 
-            var rooms = _reservationService.GetRooms(); 
-            foreach (var roomDto in rooms)
-            {
-                RoomViewModels.Add(new RoomViewModel(roomDto));
-            }
+            roomListView.ItemsSource = _roomViewModels;
+
+            LoadRooms("Room Number");
         }
 
         private void ReserveButton_Click(object sender, RoutedEventArgs e)
         {
-            var button = sender as Button;
-            if (button != null && button.Tag is string RoomNumber)
+           
+        }
+
+        private void LoadRooms(string criteria)
+        {
+            _roomViewModels.Clear(); 
+
+            foreach (var roomDto in _roomService.GetRoomsByCriteria(criteria))
             {
-                // _reservationService.ReserveRoom(RoomNumber); 
+                _roomViewModels.Add(new RoomViewModel(roomDto));
             }
         }
+
+
+        private void ColumnHeader_Click(object sender, RoutedEventArgs e)
+        {
+            GridViewColumnHeader headerClicked = e.OriginalSource as GridViewColumnHeader;
+
+            if (headerClicked != null)
+            {
+                string columnHeader = headerClicked.Column.Header.ToString();
+
+                int lastColonIndex = columnHeader.LastIndexOf(':');
+                if (lastColonIndex >= 0)
+                {
+                    string sortingCriteria = columnHeader.Substring(lastColonIndex + 1).Trim();
+
+                    LoadRooms(sortingCriteria);
+                }
+            }
+        }
+
     }
 
 }

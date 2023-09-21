@@ -19,19 +19,11 @@ namespace HotelApp.Services
             _provider = new ReservartionProvider(repository);
         }
 
-        public List<RoomDto> GetRooms()
+        public List<RoomDto> GetReservartions()
         {
-            var rooms = new List<RoomDto>
-            {
-                new RoomDto { RoomNumber = "101", Class = "Standard", PricePerNight = 100, Status = true, Description = "Standard Room 101" },
-                new RoomDto { RoomNumber = "201", Class = "Deluxe", PricePerNight = 150, Status = true, Description = "Deluxe Room 201" },
-                new RoomDto { RoomNumber = "301", Class = "Suite", PricePerNight = 200, Status = true, Description = "Suite Room 301" },
-                new RoomDto { RoomNumber = "102", Class = "Standard", PricePerNight = 100, Status = true, Description = "Standard Room 102" },
-                new RoomDto { RoomNumber = "202", Class = "Deluxe", PricePerNight = 150, Status = true, Description = "Deluxe Room 202" },
-                new RoomDto { RoomNumber = "302", Class = "Suite", PricePerNight = 200, Status = true, Description = "Suite Room 302" },
-            };
-
-            return rooms;
+            return null;
         }
+
+
     }
 }

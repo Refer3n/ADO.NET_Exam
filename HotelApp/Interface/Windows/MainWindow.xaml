@@ -13,42 +13,51 @@
         </Grid.RowDefinitions>
         <Viewbox StretchDirection="Both" Stretch="Fill">
             <ListView Name="roomListView" ItemsSource="{Binding RoomViewModels}" HorizontalContentAlignment="Stretch">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Room Number" Width="120">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding RoomNumber}" Margin="5"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Header="Class" Width="120">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Class}" Margin="5"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Header="Price Per Night" Width="120">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding PricePerNight}" Margin="5"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Width="100">
-                        <GridViewColumn.Header>
-                            <TextBlock Text="" />
-                        </GridViewColumn.Header>
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button Content="Reserve" Click="ReserveButton_Click" Tag="{Binding RoomNumber}" Margin="5"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                </GridView>
-            </ListView.View>
-        </ListView>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Width="120">
+                            <GridViewColumnHeader Click="ColumnHeader_Click">
+                                <TextBlock Text="Room Number" />
+                            </GridViewColumnHeader>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding RoomNumber}" Margin="5"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="120">
+                            <GridViewColumnHeader Click="ColumnHeader_Click">
+                                <TextBlock Text="Class" />
+                            </GridViewColumnHeader>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Class}" Margin="5"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="120">
+                            <GridViewColumnHeader Click="ColumnHeader_Click">
+                                <TextBlock Text="Price Per Night" />
+                            </GridViewColumnHeader>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding PricePerNight}" Margin="5"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="100">
+                            <GridViewColumn.Header>
+                                <TextBlock Text="" />
+                            </GridViewColumn.Header>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="Reserve" Click="ReserveButton_Click" Tag="{Binding RoomNumber}" Margin="5"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
         </Viewbox>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
 
