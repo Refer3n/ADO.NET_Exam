@@ -1,10 +1,7 @@
 ﻿using HotelApp.DAL.Entities;
 using HotelApp.DAL.Repositories;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HotelApp.Providers
 {
@@ -46,6 +43,11 @@ namespace HotelApp.Providers
         public Room GetRoom(int Id)
         {
             return _repository.Get(Id);
+        }
+
+        public Room GetRoomByNumber(string roomNumber)
+        {
+            return _repository.GetAll().FirstOrDefault(room => room.RoomNumber == roomNumber);
         }
 
         public IEnumerable<Room> GetRooms()

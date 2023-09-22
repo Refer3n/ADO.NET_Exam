@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
 using HotelApp.HotelDtos;
 using HotelApp.Providers;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HotelApp.Services
 {
@@ -46,16 +43,12 @@ namespace HotelApp.Services
 
             return rooms;
         }
-
-
-
         private void CreateProvider()
         {
             var context = new DAL.HotelContext();
             var repository = new DAL.Repositories.Repository<DAL.Entities.Room>(context);
             _provider = new RoomProvider(repository);
         }
-
         private void CreateMapper()
         {
             var config = new MapperConfiguration(cfg =>
