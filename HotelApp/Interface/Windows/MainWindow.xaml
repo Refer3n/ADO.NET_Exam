@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HotelApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="400" Width="520" MinHeight="190" MinWidth="280">
+        Title="MainWindow" Height="460" Width="520" MinHeight="360" MinWidth="420">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="9*" />
@@ -81,7 +81,9 @@
             </ListView>
         </ScrollViewer>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
-
+            <Button Content="Manage Rooms" Click="ManageRoomsButton_Click" Margin="10" FontSize="14"/>
+            <Button Content="Financial Report" Click="FinancialReportButton_Click" Margin="10"  FontSize="14"/>
+            <Button Content="Reservations" Click="ReservationsButton_Click" Margin="10" FontSize="14"/>
         </StackPanel>
     </Grid>
 </Window>

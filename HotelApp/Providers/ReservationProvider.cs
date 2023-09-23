@@ -2,9 +2,7 @@
 using HotelApp.DAL.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Linq.Expressions;
 
 namespace HotelApp.Providers
 {
@@ -52,5 +50,11 @@ namespace HotelApp.Providers
         {
             return _repository.GetAll();
         }
+
+        public IEnumerable<Reservation> GetReservationsIncluding(params Expression<Func<Reservation, object>>[] includeProperties)
+        {
+            return _repository.GetAllIncluding(includeProperties);
+        }
+
     }
 }

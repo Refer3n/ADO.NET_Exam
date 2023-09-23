@@ -77,6 +77,21 @@ namespace HotelApp
             }
         }
 
+        private void ManageRoomsButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void FinancialReportButton_Click(object sender, RoutedEventArgs e)
+        {
+            var financialWindow = new FinancialWindow();
+            financialWindow.ShowDialog();
+        }
+
+        private void ReservationsButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 
 }

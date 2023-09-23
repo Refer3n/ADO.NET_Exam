@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq.Expressions;
 
 namespace HotelApp.DAL.Repositories
 {
@@ -17,5 +13,7 @@ namespace HotelApp.DAL.Repositories
         IEnumerable<T> GetAll();
 
         T Get(int id);
+
+        IEnumerable<T> GetAllIncluding(params Expression<Func<T, object>>[] includeProperties);
     }
 }
