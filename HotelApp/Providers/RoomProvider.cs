@@ -23,6 +23,11 @@ namespace HotelApp.Providers
         {
             _repository.Add(room);
         }
+        public void AddRoom(int Id)
+        {
+            var room = GetRoom(Id);
+            _repository.Add(room);
+        }
 
         public void RemoveRooms(List<Room> rooms)
         {

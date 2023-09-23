@@ -1,5 +1,6 @@
 ﻿using HotelApp.Interface;
 using HotelApp.Interface.Windows;
+using HotelApp.Interface.Windows.RoomManagmentWindows;
 using HotelApp.Services;
 using System.Collections.ObjectModel;
 using System.Windows;
@@ -15,6 +16,7 @@ namespace HotelApp
         private ObservableCollection<RoomViewModel> _roomViewModels;
 
         private RoomService _roomService;
+        private ReservationService _reservationService;
 
         public MainWindow()
         {
@@ -42,7 +44,8 @@ namespace HotelApp
 
                     if (reserveWindow.DialogResult == true)
                     {
-                        _roomService.UpdateRoomStatus(roomDto, false);
+                        roomDto.Status = false;
+                        _roomService.UpdateRoom(roomDto);
                         LoadRooms("Room Number");
                     }
                 }
@@ -53,7 +56,7 @@ namespace HotelApp
         {
             _roomViewModels.Clear();
 
-            foreach (var roomDto in _roomService.GetAvailableRoomsByCriteria(criteria))
+            foreach (var roomDto in _roomService.GetRoomsByCriteria(criteria))
             {
                 _roomViewModels.Add(new RoomViewModel(roomDto));
             }
@@ -77,9 +80,11 @@ namespace HotelApp
             }
         }
 
-        private void ManageRoomsButton_Click(object sender, RoutedEventArgs e)
+        private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-
+            var addWindow = new AddRoomWindow(_roomService);
+            addWindow.ShowDialog();
+            LoadRooms("Room Number");
         }
 
         private void FinancialReportButton_Click(object sender, RoutedEventArgs e)
@@ -92,6 +97,74 @@ namespace HotelApp
         {
 
         }
-    }
 
+        private void UpdateButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button deleteButton)
+            {
+                if (deleteButton.Tag is string roomNumber)
+                {
+                    var roomDto = _roomService.GetRoomByNumber(roomNumber);
+
+                    var updateWindow = new UpdateRoomWindow(_roomService, roomDto);
+                    updateWindow.ShowDialog();
+                    LoadRooms("Room Number");
+                }
+            }
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button deleteButton)
+            {
+                if (deleteButton.Tag is string roomNumber)
+                {
+                    MessageBoxResult result = MessageBox.Show($"Do you want to delete room {roomNumber}?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        var roomDto = _roomService.GetRoomByNumber(roomNumber);
+
+                        _roomService.RemoveRoom(roomDto);
+                        LoadRooms("Room Number");
+                    }
+                }
+            }
+        }
+
+        private void DatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //DateTime? checkInDate = startDatePicker.SelectedDate;
+            //DateTime? checkOutDate = endDatePicker.SelectedDate;
+
+            //if (checkInDate != null && checkOutDate != null)
+            //{
+            //    if (checkOutDate <= checkInDate)
+            //    {
+            //        MessageBox.Show("Check-out date must be later than check-in date.", "Date Validation Error",
+            //            MessageBoxButton.OK, MessageBoxImage.Error);
+            //        startDatePicker.SelectedDate = null;
+            //        endDatePicker.SelectedDate = null;
+            //    }
+            //    else if (checkInDate < DateTime.Today)
+            //    {
+            //        MessageBox.Show("Check-in date cannot be in the past.", "Date Validation Error",
+            //            MessageBoxButton.OK, MessageBoxImage.Error);
+            //        startDatePicker.SelectedDate = null;
+            //        endDatePicker.SelectedDate = null;
+            //    }
+            //    else
+            //    {
+            //        _roomViewModels.Clear();
+
+            //        var roomsDto = _reservationService.GetUnoccupiedRoomsInDateRange((DateTime)checkInDate, (DateTime)checkOutDate);
+
+            //        foreach (var roomDto in roomsDto)
+            //        {
+            //            _roomViewModels.Add(new RoomViewModel(roomDto));
+            //        }
+            //    }
+            //}
+        }
+    }
 }

@@ -25,7 +25,7 @@ namespace HotelApp.Services
             return roomDtos;
         }
 
-        public List<RoomDto> GetAvailableRoomsByCriteria(string sortingCriteria)
+        public List<RoomDto> GetRoomsByCriteria(string sortingCriteria)
         {
             var availableRooms = GetAvailableRooms();
 
@@ -54,7 +54,6 @@ namespace HotelApp.Services
             return availableRooms;
         }
 
-
         public RoomDto GetRoomByNumber(string roomNumber)
         {
             var room = _provider.GetRoomByNumber(roomNumber);
@@ -62,13 +61,29 @@ namespace HotelApp.Services
             return _mapper.Map<RoomDto>(room);
         }
 
-        public void UpdateRoomStatus(RoomDto roomDto, bool newStatus)
+        public void UpdateRoom(RoomDto roomDto)
         {
             var room = GetRoomById(roomDto.Id);
 
-            room.Status = newStatus;
+            room.RoomNumber = roomDto.RoomNumber;
+            room.Status = roomDto.Status;
+            room.Class = roomDto.Class;
+            room.Description = roomDto.Description;
+            room.PricePerNight = roomDto.PricePerNight;
 
             _provider.UpdateRoom(room);
+        }
+
+        public void AddRoom(RoomDto roomDto)
+        {
+            var roomEntity = _mapper.Map<Room>(roomDto);
+
+            _provider.AddRoom(roomEntity);
+        }
+
+        public void RemoveRoom(RoomDto roomDto)
+        {
+            _provider.RemoveRoom(roomDto.Id);
         }
 
         private Room GetRoomById(int Id)

@@ -66,18 +66,33 @@ namespace HotelApp.Services
             return reservationsInDateRange;
         }
 
+        //public List<RoomDto> GetUnoccupiedRoomsInDateRange(DateTime startDate, DateTime endDate)
+        //{
+        //    var allRooms = _roomProvider.GetRooms();
+
+        //    var reservations = GetReservationsInDateRange(startDate, endDate);
+
+        //    var occupiedRoomIds = reservations.Select(r => r.RoomId).Distinct().ToList();
+
+        //    var unoccupiedRooms = allRooms.Where(room => !occupiedRoomIds.Contains(room.Id)).ToList();
+
+        //    var roomDtos = _mapper.Map<List<RoomDto>>(unoccupiedRooms);
+
+        //    return roomDtos;
+        //}
+
         private void CreateProvider()
         {
             var context = new DAL.HotelContext();
             var repository = new DAL.Repositories.Repository<Reservation>(context);
             _reservationProvider = new ReservationProvider(repository);
         }
+
         private void CreateMapper()
         {
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<Reservation, ReservationDto>()
-                .ForMember(dest => dest.Id, opt => opt.Ignore());
+                cfg.CreateMap<Reservation, ReservationDto>();
                 cfg.CreateMap<ReservationDto, Reservation>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore());
                 cfg.CreateMap<CustomerDto, Customer>();

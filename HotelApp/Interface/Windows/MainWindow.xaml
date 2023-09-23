@@ -8,9 +8,10 @@
         Title="MainWindow" Height="460" Width="520" MinHeight="360" MinWidth="420">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="9*" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="9*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+
         <ScrollViewer Grid.Row="0">
             <ListView Name="roomListView" ItemsSource="{Binding RoomViewModels}" HorizontalContentAlignment="Stretch"
                       VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto">
@@ -67,7 +68,11 @@
                             </GridViewColumn.Header>
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Content="Reserve" Click="ReserveButton_Click" Tag="{Binding RoomNumber}" FontSize="16" Margin="5"/>
+                                    <StackPanel Orientation="Vertical" Margin="5">
+                                        <Button Content="Reserve" Click="ReserveButton_Click" Tag="{Binding RoomNumber}" Width="70" FontSize="14" Margin="3"/>
+                                        <Button Content="Update" Click="UpdateButton_Click" Tag="{Binding RoomNumber}" Width="70" FontSize="14" Margin="3"/>
+                                        <Button Content="Remove" Click="DeleteButton_Click" Tag="{Binding RoomNumber}" Width="70" FontSize="14"  Margin="3"/>
+                                    </StackPanel>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
@@ -75,13 +80,13 @@
                 </ListView.View>
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
-                        <Setter Property="Height" Value="60" />
+                        <Setter Property="Height" Value="100" />
                     </Style>
                 </ListView.ItemContainerStyle>
             </ListView>
         </ScrollViewer>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Content="Manage Rooms" Click="ManageRoomsButton_Click" Margin="10" FontSize="14"/>
+            <Button Content="Add Room" Click="AddButton_Click" Margin="10" FontSize="14"/>
             <Button Content="Financial Report" Click="FinancialReportButton_Click" Margin="10"  FontSize="14"/>
             <Button Content="Reservations" Click="ReservationsButton_Click" Margin="10" FontSize="14"/>
         </StackPanel>
