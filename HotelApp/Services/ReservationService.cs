@@ -1,29 +1,48 @@
-﻿using HotelApp.HotelDtos;
+﻿using AutoMapper;
+using HotelApp.DAL.Entities;
+using HotelApp.HotelDtos;
 using HotelApp.Providers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HotelApp.Services
 {
     public class ReservationService
     {
-        private ReservartionProvider _provider;
+        private ReservationProvider _provider;
+        private IMapper _mapper;
 
         public ReservationService()
         {
-            var context = new DAL.HotelContext();
-            var repository = new DAL.Repositories.Repository<DAL.Entities.Reservation>(context);
-            _provider = new ReservartionProvider(repository);
+            CreateProvider();
+            CreateMapper();
         }
 
-        public List<RoomDto> GetReservartions()
+        public void AddReservation(ReservationDto reservationDto)
         {
-            return null;
+            var reservationEntity = _mapper.Map<Reservation>(reservationDto);
+
+            _provider.AddReservation(reservationEntity);
         }
 
+        private void CreateProvider()
+        {
+            var context = new DAL.HotelContext();
+            var repository = new DAL.Repositories.Repository<Reservation>(context);
+            _provider = new ReservationProvider(repository);
+        }
+        private void CreateMapper()
+        {
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<Reservation, ReservationDto>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore());
+                cfg.CreateMap<ReservationDto, Reservation>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore());
+                cfg.CreateMap<CustomerDto, Customer>();
+                cfg.CreateMap<RoomDto, Room>();
+            });
+
+            _mapper = config.CreateMapper();
+        }
 
     }
 }

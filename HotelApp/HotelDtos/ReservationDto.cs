@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HotelApp.HotelDtos
 {
@@ -13,7 +9,9 @@ namespace HotelApp.HotelDtos
         public DateTime EndDate { get; set; }
         public string Status { get; set; }
         public decimal Price { get; set; }
-        public CustomerDto Customer { get; set; } 
-        public RoomDto Room { get; set; } 
+        public int RoomId { get; set; }
+        public int CustomerId { get; set; }
+        public CustomerDto Customer { get; set; }
+        public RoomDto Room { get; set; }
     }
 }

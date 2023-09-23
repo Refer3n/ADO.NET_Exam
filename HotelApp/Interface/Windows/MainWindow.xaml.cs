@@ -1,20 +1,9 @@
 ﻿using HotelApp.Interface;
+using HotelApp.Interface.Windows;
 using HotelApp.Services;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace HotelApp
 {
@@ -41,19 +30,34 @@ namespace HotelApp
 
         private void ReserveButton_Click(object sender, RoutedEventArgs e)
         {
-           
+            if (sender is Button reserveButton)
+            {
+                if (reserveButton.Tag is string roomNumber)
+                {
+                    var roomDto = _roomService.GetRoomByNumber(roomNumber);
+
+                    var reserveWindow = new ReserveWindow(roomDto);
+
+                    reserveWindow.ShowDialog();
+
+                    if (reserveWindow.DialogResult == true)
+                    {
+                        _roomService.UpdateRoomStatus(roomDto, false);
+                        LoadRooms("Room Number");
+                    }
+                }
+            }
         }
 
         private void LoadRooms(string criteria)
         {
-            _roomViewModels.Clear(); 
+            _roomViewModels.Clear();
 
-            foreach (var roomDto in _roomService.GetRoomsByCriteria(criteria))
+            foreach (var roomDto in _roomService.GetAvailableRoomsByCriteria(criteria))
             {
                 _roomViewModels.Add(new RoomViewModel(roomDto));
             }
         }
-
 
         private void ColumnHeader_Click(object sender, RoutedEventArgs e)
         {

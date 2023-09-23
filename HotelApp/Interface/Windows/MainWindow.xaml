@@ -5,14 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HotelApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="400" Width="720" MinHeight="190" MinWidth="280">
+        Title="MainWindow" Height="400" Width="520" MinHeight="190" MinWidth="280">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="9*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Viewbox StretchDirection="Both" Stretch="Fill">
-            <ListView Name="roomListView" ItemsSource="{Binding RoomViewModels}" HorizontalContentAlignment="Stretch">
+        <ScrollViewer Grid.Row="0">
+            <ListView Name="roomListView" ItemsSource="{Binding RoomViewModels}" HorizontalContentAlignment="Stretch"
+                      VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Width="120">
@@ -21,7 +22,12 @@
                             </GridViewColumnHeader>
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding RoomNumber}" Margin="5"/>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{Binding RoomNumber}" Margin="5" FontSize="16"/>
+                                    </Grid>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
@@ -31,7 +37,12 @@
                             </GridViewColumnHeader>
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Class}" Margin="5"/>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{Binding Class}" Margin="5" FontSize="16"/>
+                                    </Grid>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
@@ -41,7 +52,12 @@
                             </GridViewColumnHeader>
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding PricePerNight}" Margin="5"/>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{Binding PricePerNight}" Margin="5" FontSize="16"/>
+                                    </Grid>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
@@ -51,14 +67,19 @@
                             </GridViewColumn.Header>
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Content="Reserve" Click="ReserveButton_Click" Tag="{Binding RoomNumber}" Margin="5"/>
+                                    <Button Content="Reserve" Click="ReserveButton_Click" Tag="{Binding RoomNumber}" FontSize="16" Margin="5"/>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
                     </GridView>
                 </ListView.View>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Height" Value="60" />
+                    </Style>
+                </ListView.ItemContainerStyle>
             </ListView>
-        </Viewbox>
+        </ScrollViewer>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
 
         </StackPanel>

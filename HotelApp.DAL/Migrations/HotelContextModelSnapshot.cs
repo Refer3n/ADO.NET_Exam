@@ -51,26 +51,15 @@ namespace HotelApp.DAL.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("HotelApp.DAL.Entities.Finance", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("TransactionDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("TransactionDescription")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Finances");
-                });
-
             modelBuilder.Entity("HotelApp.DAL.Entities.Reservation", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("EndDate")
@@ -78,6 +67,9 @@ namespace HotelApp.DAL.Migrations
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("RoomId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
@@ -87,6 +79,10 @@ namespace HotelApp.DAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("RoomId");
 
                     b.ToTable("Reservations");
                 });
@@ -122,28 +118,17 @@ namespace HotelApp.DAL.Migrations
                     b.ToTable("Rooms");
                 });
 
-            modelBuilder.Entity("HotelApp.DAL.Entities.Finance", b =>
-                {
-                    b.HasOne("HotelApp.DAL.Entities.Reservation", "Reservation")
-                        .WithOne("Finance")
-                        .HasForeignKey("HotelApp.DAL.Entities.Finance", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Reservation");
-                });
-
             modelBuilder.Entity("HotelApp.DAL.Entities.Reservation", b =>
                 {
                     b.HasOne("HotelApp.DAL.Entities.Customer", "Customer")
-                        .WithOne("Reservation")
-                        .HasForeignKey("HotelApp.DAL.Entities.Reservation", "Id")
+                        .WithMany("Reservations")
+                        .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("HotelApp.DAL.Entities.Room", "Room")
-                        .WithOne("Reservation")
-                        .HasForeignKey("HotelApp.DAL.Entities.Reservation", "Id")
+                        .WithMany("Reservations")
+                        .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -154,20 +139,12 @@ namespace HotelApp.DAL.Migrations
 
             modelBuilder.Entity("HotelApp.DAL.Entities.Customer", b =>
                 {
-                    b.Navigation("Reservation")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("HotelApp.DAL.Entities.Reservation", b =>
-                {
-                    b.Navigation("Finance")
-                        .IsRequired();
+                    b.Navigation("Reservations");
                 });
 
             modelBuilder.Entity("HotelApp.DAL.Entities.Room", b =>
                 {
-                    b.Navigation("Reservation")
-                        .IsRequired();
+                    b.Navigation("Reservations");
                 });
 #pragma warning restore 612, 618
         }

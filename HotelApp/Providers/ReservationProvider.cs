@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace HotelApp.Providers
 {
-    public class ReservartionProvider
+    public class ReservationProvider
     {
         private readonly IRepository<Reservation> _repository;
 
-        public ReservartionProvider(IRepository<Reservation> repository)
+        public ReservationProvider(IRepository<Reservation> repository)
         {
             _repository = repository;
         }

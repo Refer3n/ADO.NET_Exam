@@ -50,6 +50,11 @@ namespace HotelApp.Providers
             return _repository.GetAll().FirstOrDefault(room => room.RoomNumber == roomNumber);
         }
 
+        public void UpdateRoom(Room room)
+        {
+            _repository.Update(room);
+        }
+
         public IEnumerable<Room> GetRooms()
         {
             return _repository.GetAll();

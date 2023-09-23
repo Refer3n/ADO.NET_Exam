@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace HotelApp.DAL.Entities
 {
@@ -21,6 +15,6 @@ namespace HotelApp.DAL.Entities
 
         public string PhoneNumber { get; set; }
 
-        public virtual Reservation Reservation { get; set; }
+        public virtual ICollection<Reservation> Reservations { get; set; }
     }
 }

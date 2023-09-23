@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HotelApp.DAL.Entities;
 using HotelApp.HotelDtos;
 using HotelApp.Providers;
 using System.Collections.Generic;
@@ -24,36 +25,70 @@ namespace HotelApp.Services
             return roomDtos;
         }
 
-        public List<RoomDto> GetRoomsByCriteria(string sortingCriteria)
+        public List<RoomDto> GetAvailableRoomsByCriteria(string sortingCriteria)
         {
-            var rooms = GetRooms();
+            var availableRooms = GetAvailableRooms();
 
             switch (sortingCriteria)
             {
                 case "Room Number":
-                    rooms = rooms.OrderBy(r => r.RoomNumber).ToList();
+                    availableRooms = availableRooms.OrderBy(r => r.RoomNumber).ToList();
                     break;
                 case "Class":
-                    rooms = rooms.OrderBy(r => r.Class).ToList();
+                    availableRooms = availableRooms.OrderBy(r => r.PricePerNight).ToList();
                     break;
                 case "Price Per Night":
-                    rooms = rooms.OrderBy(r => r.PricePerNight).ToList();
+                    availableRooms = availableRooms.OrderBy(r => r.PricePerNight).ToList();
                     break;
             }
 
-            return rooms;
+            return availableRooms;
         }
+
+        public List<RoomDto> GetAvailableRooms()
+        {
+            var allRooms = GetRooms();
+
+            var availableRooms = allRooms.Where(r => r.Status == true).ToList();
+
+            return availableRooms;
+        }
+
+
+        public RoomDto GetRoomByNumber(string roomNumber)
+        {
+            var room = _provider.GetRoomByNumber(roomNumber);
+
+            return _mapper.Map<RoomDto>(room);
+        }
+
+        public void UpdateRoomStatus(RoomDto roomDto, bool newStatus)
+        {
+            var room = GetRoomById(roomDto.Id);
+
+            room.Status = newStatus;
+
+            _provider.UpdateRoom(room);
+        }
+
+        private Room GetRoomById(int Id)
+        {
+            return _provider.GetRoom(Id);
+        }
+
         private void CreateProvider()
         {
             var context = new DAL.HotelContext();
-            var repository = new DAL.Repositories.Repository<DAL.Entities.Room>(context);
+            var repository = new DAL.Repositories.Repository<Room>(context);
             _provider = new RoomProvider(repository);
         }
         private void CreateMapper()
         {
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<DAL.Entities.Room, RoomDto>();
+                cfg.CreateMap<Room, RoomDto>();
+                cfg.CreateMap<RoomDto, Room>()
+                   .ForMember(dest => dest.Id, opt => opt.Ignore());
             });
 
             _mapper = config.CreateMapper();

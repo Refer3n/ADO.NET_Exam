@@ -11,8 +11,6 @@ namespace HotelApp.DAL
 
         public virtual DbSet<Reservation> Reservations { get; set; }
 
-        public virtual DbSet<Finance> Finances { get; set; }
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             string conString = "Data Source=DESKTOP-VI7HLAA\\SQLSERVER;Initial Catalog=Hotel;Integrated Security=True;Connect Timeout=30;TrustServerCertificate=True;";
@@ -20,5 +18,19 @@ namespace HotelApp.DAL
             optionsBuilder.UseSqlServer(conString);
             base.OnConfiguring(optionsBuilder);
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Reservation>()
+                .HasOne(r => r.Customer)
+                .WithMany(c => c.Reservations)
+                .HasForeignKey(r => r.CustomerId);
+
+            modelBuilder.Entity<Reservation>()
+                .HasOne(r => r.Room)
+                .WithMany(r => r.Reservations)
+                .HasForeignKey(r => r.RoomId);
+        }
+
     }
 }

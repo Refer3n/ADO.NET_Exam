@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace HotelApp.DAL.Entities
 {
@@ -21,12 +15,13 @@ namespace HotelApp.DAL.Entities
 
         public decimal Price { get; set; }
 
-        [ForeignKey("Id")]
+        public int CustomerId { get; set; }
+
         public Customer Customer { get; set; }
 
-        [ForeignKey("Id")]
-        public Room Room { get; set; }
+        public int RoomId { get; set; }
 
-        public virtual Finance Finance { get; set; }
+        public Room Room { get; set; }
     }
+
 }

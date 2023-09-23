@@ -1,10 +1,7 @@
 ﻿using HotelApp.DAL.Entities;
 using HotelApp.DAL.Repositories;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HotelApp.Providers
 {
@@ -46,6 +43,13 @@ namespace HotelApp.Providers
         public Customer GetCustomer(int Id)
         {
             return _repository.Get(Id);
+        }
+
+        public Customer GetCustomerByName(string name, string lastName)
+        {
+            return _repository.GetAll()
+                .FirstOrDefault(customer =>
+                    customer.Name == name && customer.LastName == lastName);
         }
 
         public IEnumerable<Customer> GetCustomers()
